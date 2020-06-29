@@ -1,0 +1,157 @@
+# Play doorbell chime and send notifications
+- id: '1592300701175'
+  alias: Doorbell notifier
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.doorbell_button
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      filename: /config/www/images/doorbell/front_door_snapshot.jpg
+    entity_id: camera.doorbell_camera
+    service: camera.snapshot
+  - data:
+      file: '1'
+    service: esphome.audio_doorbell_ground_floor_dfplayer_play
+  - data:
+      file: '1'
+    service: esphome.audio_doorbell_top_floor_dfplayer_play
+  - delay: 00:00:01
+  - data:
+      data:
+        actions:
+        - action: doorbell_someone_coming
+          title: Someone coming
+        - action: doorbell_no_one
+          title: No one can come
+        - action: doorbell_drop_parcel
+          title: Drop parcel
+        clickAction: /lovelace-smartphone/doorbell
+        image: https://d9sg75wrydggk9agaqdbpe4nwp7os4my.ui.nabu.casa/local/images/doorbell/front_door_snapshot.jpg
+        priority: high
+        tag: doorbell
+        ttl: 0
+      message: Doorbell pressed at {{ as_timestamp(now()) | timestamp_custom('%-H:%M',
+        true) }}
+      title: Doorbell
+    service: notify.mobile_app_ron_s_pixel_3_xl
+  - data:
+      data:
+        actions:
+        - action: doorbell_someone_coming
+          title: Someone coming
+        - action: doorbell_no_one
+          title: No one can come
+        - action: doorbell_drop_parcel
+          title: Drop parcel
+        clickAction: /lovelace-smartphone/doorbell
+        image: https://d9sg75wrydggk9agaqdbpe4nwp7os4my.ui.nabu.casa/local/images/doorbell/front_door_snapshot.jpg
+        priority: high
+        tag: doorbell
+        ttl: 0
+      message: Doorbell pressed at {{ as_timestamp(now()) | timestamp_custom('%-H:%M',
+        true) }}
+      title: Doorbell
+    service: notify.mobile_app_brett_pixel_2_xl
+  - data:
+      data:
+        color: black
+        file:
+          path: /config/www/images/doorbell/front_door_snapshot.jpg
+        fontsize: large
+        position: top-right
+        transparency: 50%
+      message: Doorbell pressed.
+      title: Doorbell
+    service: notify.bedroom_shield_tv
+  - data:
+      data:
+        color: black
+        file:
+          path: /config/www/images/doorbell/front_door_snapshot.jpg
+        fontsize: large
+        position: top-right
+        transparency: 50%
+      message: Doorbell pressed.
+      title: Doorbell
+    service: notify.living_room_shield_tv
+  - data: {}
+    service: script.show_doorbell_on_tablets
+
+# Doorbell feedback: Someone is coming
+- id: '1592406715238'
+  alias: Doorbell someone coming
+  description: ''
+  trigger:
+  - event_data:
+      event_data:
+        action: someone_coming
+    event_type: mobile_app_notification_action
+    platform: event
+  condition: []
+  action:
+  - data:
+      file: '2'
+    service: esphome.doorbell_dfplayer_play
+
+# Doorbell feedback: No one can come to the door
+- id: '1592406919044'
+  alias: Doorbell no one can come
+  description: ''
+  trigger:
+  - event_data:
+      event_data:
+        action: no_one
+    event_type: mobile_app_notification_action
+    platform: event
+  condition: []
+  action:
+  - data:
+      file: '1'
+    service: esphome.doorbell_dfplayer_play
+
+# Doorbell feedback: Drop parcel
+- id: '1592407033220'
+  alias: Doorbell drop parcel
+  description: ''
+  trigger:
+  - event_data:
+      event_data:
+        action: drop_parcel
+    event_type: mobile_app_notification_action
+    platform: event
+  condition: []
+  action:
+  - data:
+      file: '3'
+    service: esphome.doorbell_dfplayer_play
+
+# Doorbell feedback: Sound alarm
+- id: doorbell_alarm_on
+  alias: Doorbell alarm on
+  description: ''
+  trigger:
+  - entity_id: input_boolean.doorbell_alarm_on
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      file: '8'
+      loop_: true
+    service: esphome.doorbell_dfplayer_play_loop
+
+# Doorbell feedback: Stop the alarm
+- id: doorbell_alarm_off
+  alias: Doorbell alarm off
+  description: ''
+  trigger:
+  - entity_id: input_boolean.doorbell_alarm_on
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - service: esphome.doorbell_dfplayer_stop
