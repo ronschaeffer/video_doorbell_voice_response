@@ -1,0 +1,215 @@
+# Substitutions
+substitutions:
+  board_platform: ESP32
+  board_type: esp32cam
+  devicename: doorbell
+  hostname: doorbell
+  buttonname: doorbell_button
+  devicestatusname: doorbell_status
+  staticip: 192.168.86.28
+  apssid: esphome_doorbell
+  wifigateway: 192.168.86.1
+  subnet: 255.255.255.0
+  # esp32 cam
+  buttonlight: doorbell_button_light
+  buttonlightpin: GPIO13
+  statuslight: doorbell_status_light
+  statuslightpin: GPIO33
+  flashlightpin: GPIO4
+  buttonpin: GPIO12
+  # dfplayer
+  df_tx_pin: GPIO14
+  df_rx_pin: GPIO15
+
+esphome:
+  name: $devicename
+  platform: $board_platform
+  board: $board_type
+  on_boot:
+    priority: -10
+    then:
+      - light.turn_on: $buttonlight
+      - light.turn_on: $statuslight
+
+# Enable WiFi
+wifi:
+  networks:
+  - ssid: !secret wifi_ssid
+    password: !secret wifi_pwd
+  - ssid: !secret wifi_ssid_backup
+    password: !secret wifi_pwd_backup
+  manual_ip:
+    static_ip: $staticip
+    gateway: $wifigateway
+    subnet: $subnet
+  ap: #Settings for captive portal
+    ssid: $apssid
+    password: !secret esphome_appassword
+captive_portal: # AP in case WiFi connection fails
+
+# Enable logging
+logger:
+
+# Enable ESPHome API
+# See api section below with dfplayer services
+
+# Enable OTA firmware update
+ota:
+
+# Enable web server
+#web_server:
+
+
+# Camera config
+esp32_camera:
+  name: $hostname Camera
+  external_clock:
+    pin: GPIO0
+    frequency: 20MHz
+  i2c_pins:
+    sda: GPIO26
+    scl: GPIO27
+  data_pins: [GPIO5, GPIO18, GPIO19, GPIO21, GPIO36, GPIO39, GPIO34, GPIO35]
+  vsync_pin: GPIO25
+  href_pin: GPIO23
+  pixel_clock_pin: GPIO22
+  power_down_pin: GPIO32
+  resolution: 640x480
+  idle_framerate: 0.1 fps
+  vertical_flip: false
+  horizontal_mirror: false
+
+output:
+#flashlight
+  - platform: gpio
+    pin: $flashlightpin
+    id: gpio_4
+#statuslight
+  - platform: gpio
+    pin:
+      number: $statuslightpin
+      inverted: True
+    id: gpio_33
+#buttonlight
+  - platform: gpio
+    pin:
+      number: $buttonlightpin
+      #inverted: True
+    id: gpio_13
+
+light:
+#flashlight
+  - platform: binary
+    output: gpio_4
+    name: $hostname flash
+#statuslight
+  - platform: binary   
+    output: gpio_33
+    id: $statuslight
+#buttonlight
+  - platform: binary
+    output: gpio_13
+    id: $buttonlight
+# WiFi signal strength
+sensor:
+  - platform: wifi_signal
+    name: $hostname WiFi Signal
+    update_interval: 300s
+
+switch:      
+  - platform: restart
+    name: $hostname restart
+    
+binary_sensor:
+  - platform: status
+    name: $devicestatusname
+  - platform: gpio
+    pin:
+      number: $buttonpin
+      mode: INPUT_PULLUP
+      inverted: True
+    name: $buttonname
+    on_press:
+      then:
+        - dfplayer.play:
+            file: 6
+        - light.turn_off: $buttonlight
+        - delay: 0.10s
+        - light.turn_on: $buttonlight
+        - delay: 0.10s
+        - light.turn_off: $buttonlight
+        - delay: 0.10s
+        - light.turn_on: $buttonlight
+        - delay: 0.10s
+        - light.turn_off: $buttonlight
+        - delay: 0.125s
+        - light.turn_on: $buttonlight
+        - delay: 0.125s
+        - light.turn_off: $buttonlight
+        - delay: 0.125s
+        - light.turn_on: $buttonlight
+        - delay: 0.125s
+        - light.turn_off: $buttonlight
+        - delay: 0.15s
+        - light.turn_on: $buttonlight
+        - delay: 0.15s
+        - light.turn_off: $buttonlight
+        - delay: 0.155s
+        - light.turn_on: $buttonlight
+        - delay: 0.155s
+        - light.turn_off: $buttonlight
+        - delay: 0.20s
+        - light.turn_on: $buttonlight
+        - delay: 0.20s
+        - light.turn_off: $buttonlight
+        - delay: 0.25s
+        - light.turn_on: $buttonlight
+        - delay: 0.25s
+        - light.turn_off: $buttonlight
+        - delay: 0.30s
+        - light.turn_on: $buttonlight
+
+# dfplayer #######################################################
+# on SD card:
+# # no one can come 1
+# someone coming 2
+# # drop parcel 3
+# ding 4
+# ding dong 5
+# short westminster 6
+# long westminster 7
+# alarm 8
+
+uart:
+  tx_pin: $df_tx_pin
+  rx_pin: $df_rx_pin
+  baud_rate: 9600
+
+dfplayer:
+  on_finished_playback:
+    then:
+      logger.log: 'Playback finished'
+
+api:
+  services:
+    - service: dfplayer_play
+      variables:
+        file: int
+      then:
+        - dfplayer.play: !lambda 'return file;'
+    - service: dfplayer_play_loop
+      variables:
+        file: int
+        loop_: bool
+      then:
+        - dfplayer.play:
+            file: !lambda 'return file;'
+            loop: !lambda 'return loop_;'
+    - service: dfplayer_set_volume
+      variables:
+        volume: int
+      then:
+        - dfplayer.set_volume: !lambda 'return volume;'
+    - service: dfplayer_stop
+      then:
+        - dfplayer.stop
