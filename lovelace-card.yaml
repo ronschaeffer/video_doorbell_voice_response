@@ -1,0 +1,106 @@
+cards:
+  - aspect_ratio: 75%
+    entity: camera.doorbell_camera
+    name: Doorbell
+    show_state: true
+    type: picture-entity
+  - icon: 'fas:comment-dots'
+    layout: icon_name
+    name: Someone is coming
+    styles:
+      card:
+        - font-size: 1.6rem
+      icon:
+        - width: 30%
+      name:
+        - justify-self: start
+    tap_action:
+      action: call-service
+      service: automation.trigger
+      service_data:
+        entity_id: automation.doorbell_someone_coming
+    type: 'custom:button-card'
+  - icon: 'fas:comment-dots'
+    layout: icon_name
+    name: No one can come
+    styles:
+      card:
+        - font-size: 1.6rem
+      icon:
+        - width: 30%
+      name:
+        - justify-self: start
+    tap_action:
+      action: call-service
+      service: automation.trigger
+      service_data:
+        entity_id: automation.doorbell_no_one_can_come
+    type: 'custom:button-card'
+  - icon: 'fas:comment-dots'
+    layout: icon_name
+    name: Please drop parcel
+    styles:
+      card:
+        - font-size: 1.6rem
+        - margin-right: 10%
+      icon:
+        - width: 30%
+      name:
+        - justify-self: start
+    tap_action:
+      action: call-service
+      service: automation.trigger
+      service_data:
+        entity_id: automation.doorbell_drop_parcel
+    type: 'custom:button-card'
+  - card:
+      icon: 'mdi:bullhorn'
+      layout: icon_name
+      name: Sound alarm
+      styles:
+        card:
+          - font-size: 1.6rem
+          - margin-right: 10%
+          - background-color: '#B60000'
+        icon:
+          - width: 30%
+          - color: white
+        name:
+          - justify-self: start
+          - color: white
+      tap_action:
+        action: call-service
+        service: input_boolean.turn_on
+        service_data:
+          entity_id: input_boolean.doorbell_alarm_on
+      type: 'custom:button-card'
+    conditions:
+      - entity: input_boolean.doorbell_alarm_on
+        state: 'off'
+    type: conditional
+  - card:
+      icon: 'mdi:bullhorn'
+      layout: icon_name
+      name: Cancel alarm
+      styles:
+        card:
+          - font-size: 1.6rem
+          - margin-right: 10%
+          - background-color: '#B60000'
+        icon:
+          - width: 30%
+          - color: white
+        name:
+          - justify-self: start
+          - color: white
+      tap_action:
+        action: call-service
+        service: input_boolean.turn_off
+        service_data:
+          entity_id: input_boolean.doorbell_alarm_on
+      type: 'custom:button-card'
+    conditions:
+      - entity: input_boolean.doorbell_alarm_on
+        state: 'on'
+    type: conditional
+type: vertical-stack
