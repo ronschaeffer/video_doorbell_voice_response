@@ -1,0 +1,29 @@
+show_doorbell_on_tablets:
+  alias: show_doorbell_on_tablets
+  sequence:
+  - data:
+      deviceID:
+      - topfloortab_browser
+      navigation_path: /lovelace-topfloor/doorbell
+    service: browser_mod.navigate
+  - data:
+      deviceID:
+      - groundfloortab_browser
+      navigation_path: /lovelace-london/doorbell
+    service: browser_mod.navigate
+  - data: {}
+    entity_id:
+    - light.topfloortab_browser
+    - light.groundfloortab_browser
+    service: light.turn_on
+  - delay: '45'
+  - data:
+      deviceID:
+      - topfloortab_browser
+      navigation_path: /lovelace-topfloor/topfloor
+    service: browser_mod.navigate
+  - data:
+      deviceID:
+      - groundfloortab_browser
+      navigation_path: /lovelace-london/default_view
+    service: browser_mod.navigate
