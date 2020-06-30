@@ -21,7 +21,7 @@ This has been a long running project to create a cloudless video doorbell with n
 
 ## Building the doorbell
 
-The design of the doorbell is very specific to my need where the doorbell had to fit on the narrow doorframe and be positioned at an angle.
+The design of the doorbell is very specific to my need where the doorbell had to fit on the narrow doorframe and be positioned at an angle.  On the plus side, it's well protected from rain, so I didn't have to make it waterproof.
 
 I've wired a 5V (actually USB) cable through the doorframe so that the doorbell has constant power. The cable is not visible inside the house.
 
@@ -31,6 +31,7 @@ I've wired a 5V (actually USB) cable through the doorframe so that the doorbell 
   (Note that this design is very specific to my needs, and the files are not particularly "clean" as a result of lots of trial and error.)
 - [Lens insert](https://cad.onshape.com/documents/9f03d6aa3c65d7100cf633ae/w/a58196c250d56a4f8fff0bc5/e/e6154cd1baae63dc528d893a)
 - Custom 3mm acrylic front bezel (EPS file in repository) laser cut by [Razorlab](https://www.razorlab.online/)
+- Piece of speaker fabric hot glued to the back of the speaker holes.
 
 ![Mechanical parts](readme_media/mech.png?raw=true)
 
@@ -62,7 +63,7 @@ The system is based on Home Assistant with ESPHome. It uses a number of automati
 
 There are many ways you can implement doorbell chimes. In past iterations, I've used Sonos speakers, Raspberry Pis with speakers attached and Google Home Minis. I'm finally happy with the current solution which is based on an ESP8266 Wemos D1 Mini paired with a DFPlayer Mini and connected to some amplified PC speakers, all running with ESPHome. I haven't included the details in this repository, but here's a pic.
 
-If you wanted to make something similar but self-contained, you could use a speaker similar to the one in the doorbell itself and put it together is pne housing. 
+If you wanted to make something similar but self-contained, you could use a speaker similar to the one in the doorbell itself and put it together in one housing with doorbell electronics.
 
 ![Electrical](readme_media/doorbell_chime.jpg?raw=true)
 
