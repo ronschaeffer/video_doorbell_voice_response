@@ -61,11 +61,15 @@ The system is based on Home Assistant with ESPHome. It uses a number of automati
 
 ## Doorbell chimes
 
-There are many ways you can implement doorbell chimes. In past iterations, I've used Sonos speakers, Raspberry Pis with speakers attached and Google Home Minis. I'm finally happy with the current solution which is based on an ESP8266 Wemos D1 Mini paired with a DFPlayer Mini and connected to some amplified PC speakers, all running with ESPHome. I haven't included the details in this repository, but here's a pic.
+There are many ways that you could implement doorbell chimes. In past iterations, I've used Sonos speakers, Raspberry Pis with speakers attached and Google Home Minis. I'm finally happy with the current solution which is based on an ESP8266 Wemos D1 Mini paired with a DFPlayer Mini and connected to some amplified PC speakers, all running with ESPHome. 
 
-If you wanted to make something similar but self-contained, you could use a speaker similar to the one in the doorbell itself and put it together in one housing with doorbell electronics.
+Here's a pic. It's far from elegant looking, but both chimes are hidden from view in the house. And, it can go very loud with the amplified speakers. If you wanted to make something similar but self-contained, you could use a speaker similar to the one in the doorbell itself and put it together in one housing with the electronics.
 
-![Electrical](readme_media/doorbell_chime.jpg?raw=true)
+![Chime overview](readme_media/doorbell_chime.jpg)
+
+An ESPHome configuration is in the repository, and here's a wiring diagram with options for amplified speakers via a 3.5mm jack or direct conenction to a speaker.
+
+![Chime wiring](readme_media/chime_wiring.jpeg?raw=true)
 
 ## To do
 
