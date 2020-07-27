@@ -23,6 +23,8 @@ This has been a long running project to create a cloudless video doorbell with n
 
 The design of the doorbell is very specific to my need where the doorbell had to fit on the narrow doorframe and be positioned at an angle.  On the plus side, it's well protected from rain, so I didn't have to make it waterproof.
 
+If you have the luxury of space, consider designing your own housing that is wider. Internal assembly is very tight in this design.
+
 I've wired a 5V (actually USB) cable through the doorframe so that the doorbell has constant power. The cable is not visible inside the house.
 
 ### Mechanical parts
