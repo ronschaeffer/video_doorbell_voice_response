@@ -73,6 +73,10 @@ An ESPHome configuration is in the repository, and here's a wiring diagram with 
 
 ![Chime wiring](readme_media/chime_wiring.jpeg?raw=true)
 
+## Generating Voice Response MP3s
+
+There are many ways to generate MP3 voice response files if you want to change them. One of the simplest is to use an app such as [MyVoice](https://play.google.com/store/apps/details?id=com.texttospeech.tomford.MyVoice) for Android.
+
 ## To do
 
 - Add video recording and snapshot archiving
