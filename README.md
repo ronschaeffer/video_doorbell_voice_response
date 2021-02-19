@@ -46,6 +46,8 @@ The electrical design is straightforward. The difficult bit was to fit everythin
 - [Speaker](https://www.amazon.co.uk/dp/B07DVFCJ34/ref=pe_3187911_185740111_TE_item)
 - [Momentary button with LED](https://www.amazon.com/Ulincos-Momentary-Pushbutton-U19D1-Suitable/dp/B01LZ4OU04)
 
+The reason for a long lead camera module is that the camera image is rotated at 90deg when the ESP32-Cam is in a portrait orientation. Using a long lead camera module and mounting the ESP32-Cam board backwards enables making a gentle 90deg turn in the flex between the board and the module.
+
 ![Electrical](readme_media/elec.png?raw=true)
 
 ### Software
