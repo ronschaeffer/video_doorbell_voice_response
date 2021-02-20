@@ -48,6 +48,8 @@ The electrical design is straightforward. The difficult bit was to fit everythin
 
 The reason for a long lead camera module is that the camera image is rotated at 90deg when the ESP32-Cam is in a portrait orientation. Using a long lead camera module and mounting the ESP32-Cam board backwards enables making a gentle 90deg turn in the flex between the board and the module.
 
+You could instead use [card-mod](https://github.com/thomasloven/lovelace-card-mod) to rotate the image on a Lovelace dashboard. (Thanks to @solomos for the [tip](https://community.home-assistant.io/t/diy-video-doorbell-with-voice-response-esphome-esp32-camera-dfplayer-mini/208254/64?u=ronschaeffer) on the Home Assistant Community forum.) However, the image would still be rotated if you used it in other ways such as sending it in a notification.)
+
 ![Electrical](readme_media/elec.png?raw=true)
 
 ### Software
@@ -75,9 +77,19 @@ An ESPHome configuration is in the repository, and here's a wiring diagram with 
 
 ![Chime wiring](readme_media/chime_wiring.jpeg?raw=true)
 
-## Generating Voice Response MP3s
+## Audio files, DFPlayer Mini & the SD card
 
-There are many ways to generate MP3 voice response files if you want to change them. One of the simplest is to use an app such as [MyVoice](https://play.google.com/store/apps/details?id=com.texttospeech.tomford.MyVoice) for Android.
+You can use any MP3 file for the doorbell chime. [Orange Free Sounds](https://orangefreesounds.com/?s=doorbell) is a good source. 
+
+There are many ways to generate MP3 voice response files for the doorbell if you want to change them. One of the simplest is to use an app such as [MyVoice](https://play.google.com/store/apps/details?id=com.texttospeech.tomford.MyVoice) for Android.
+
+[Here](https://reprage.com/post/dfplayer-mini-cheat-sheet) is a good overview of the DFPlayer Mini that includes tips to prepare the SD card. Note that although the guide shows Linux commands, you can use any OS as long as you can format FAT32.
+
+In short:
+
+1. Format the SD card as FAT32
+2. Rename the files following the example: 001.mp3, 002.mp3, etc. Keep track of which files are which number so that you can refer to them correctly in the ESPHome code later.
+3. Copy the files to the card in the order of the numbering. So, for example, copy 001.MP3 to the card first.
 
 ## To do
 
