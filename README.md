@@ -31,7 +31,7 @@ I've wired a 5V (actually USB) cable through the doorframe so that the doorbell 
 
 - [Custom 3D printed housing & printed camera holder designed in OnShape](https://cad.onshape.com/documents/9f03d6aa3c65d7100cf633ae/w/a58196c250d56a4f8fff0bc5/e/e6154cd1baae63dc528d893a)
   (Note that this design is very specific to my needs, and the files are not particularly "clean" as a result of lots of trial and error.)
-- [Lens insert 2mm x 16mm](https://www.ebay.co.uk/itm/293015681235)
+- [Lens insert 2mm x 16mm](https://www.ebay.co.uk/itm/253055078110)
 - Custom 3mm acrylic front bezel (EPS file in repository) laser cut by [Razorlab](https://www.razorlab.online/)
 - Piece of speaker fabric hot glued to the back of the speaker holes.
 
